@@ -860,3 +860,26 @@ query for `DataProcessorCredentials` in the database.
 
 The MVD uses the default `EdcScopeToCriterionTransformer` to achieve this. It is recommended to implement a custom
 `ScopeToCriterionTransformer` for an actual production scenario.
+
+## Use Minikube as Alternative to KinD
+
+Build the docker images as described above (section 5.1). Then, instead of
+moving on to section 5.2, do the following:
+
+0. `alias minikube='minikube -p mvd'`
+1. `alias kubectl='minikube kubectl --'`
+2. `minikube start`
+3. `minikube addons enable ingress`
+4. Wait for the ingress controller to become available:
+    ```
+    kubectl wait --namespace ingress-nginx \
+      --for=condition=ready pod \
+      --selector=app.kubernetes.io/component=controller \
+      --timeout=90s
+    ```
+5. Forward the local port 80 to the ingress controller:
+    `sudo ssh -i $(minikube ssh-key) docker@$(minikube ip) -L 80:localhost:80`
+6. Load the images:
+    `minikube image load controlplane:latest dataplane:latest identity-hub:latest catalog-server:latest sts:latest`
+
+Now you can go on with starting the pods with `terraform init`, `terraform apply` etc. (see above, section 5.2).

@@ -29,3 +29,11 @@ output "provider-jdbc-url" {
     provider-manufacturing = "jdbc:postgresql://${module.provider-postgres.database-url}/provider_manufacturing"
   }
 }
+
+output "provider-mariadb" {
+  value = {
+    host = module.provider-mariadb.database-host
+    port = module.provider-mariadb.database-port
+    ip = module.provider-mariadb.database-ip
+  }
+}

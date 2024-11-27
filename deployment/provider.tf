@@ -99,7 +99,20 @@ module "provider-vault" {
   namespace         = kubernetes_namespace.ns.metadata.0.name
 }
 
-# Postgres database for the consumer
+# Mariadb database for provider linkahead
+module "provider-mariadb" {
+  source = "./modules/mariadb"
+  instance-name = "provider"
+  namespace = kubernetes_namespace.ns.metadata.0.name
+}
+
+module "provider-linkahead" {
+  source = "./modules/linkahead"
+  instance-name = "provider"
+  namespace = kubernetes_namespace.ns.metadata.0.name
+}
+
+# Postgres database for the provider
 module "provider-postgres" {
   depends_on    = [kubernetes_config_map.postgres-initdb-config-cs]
   source        = "./modules/postgres"
