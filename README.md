@@ -880,6 +880,6 @@ moving on to section 5.2, do the following:
 5. Forward the local port 80 to the ingress controller:
     `sudo ssh -i $(minikube ssh-key) docker@$(minikube ip) -L 80:localhost:80`
 6. Load the images:
-    `minikube image load controlplane:latest dataplane:latest identity-hub:latest catalog-server:latest sts:latest`
+    `minikube image load controlplane:latest dataplane:latest identity-hub:latest catalog-server:latest sts:latest indiscale/linkahead:dev`
 
 Now you can go on with starting the pods with `terraform init`, `terraform apply` etc. (see above, section 5.2).
