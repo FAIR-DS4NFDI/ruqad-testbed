@@ -1,0 +1,9 @@
+meta {
+  name: DID Document Mgmt API
+}
+
+tests {
+  test("Status is OK", function() {
+    expect(res.getStatus()).to.be.oneOf([200, 204])
+  })
+}

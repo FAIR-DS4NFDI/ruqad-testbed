@@ -112,6 +112,14 @@ module "provider-linkahead" {
   namespace = kubernetes_namespace.ns.metadata.0.name
 }
 
+module "kadi" {
+  source = "./modules/kadi"
+  instance-name = "kadi"
+  namespace = kubernetes_namespace.ns.metadata.0.name
+  sqlalchemy-database-uri = "postgresql://kadi:kadi@${module.provider-postgres.database-url}/kadi"
+  redis-uri = "redis://${module.provider-redis.database-url}/0"
+}
+
 # Postgres database for the provider
 module "provider-postgres" {
   depends_on    = [kubernetes_config_map.postgres-initdb-config-cs]
@@ -122,7 +130,14 @@ module "provider-postgres" {
     kubernetes_config_map.postgres-initdb-config-pqna.metadata[0].name,
     kubernetes_config_map.postgres-initdb-config-pm.metadata[0].name,
     kubernetes_config_map.postgres-initdb-config-ih.metadata[0].name,
+    kubernetes_config_map.postgres-initdb-config-kadi.metadata[0].name,
   ]
+  namespace = kubernetes_namespace.ns.metadata.0.name
+}
+
+module "provider-redis" {
+  source = "./modules/redis"
+  instance-name = "redis"
   namespace = kubernetes_namespace.ns.metadata.0.name
 }
 
@@ -181,6 +196,20 @@ resource "kubernetes_config_map" "postgres-initdb-config-ih" {
         CREATE USER identity WITH ENCRYPTED PASSWORD 'identity' SUPERUSER;
         CREATE DATABASE identity;
         \c identity
+      EOT
+  }
+}
+
+resource "kubernetes_config_map" "postgres-initdb-config-kadi" {
+  metadata {
+    name      = "kadi-initdb-config"
+    namespace = kubernetes_namespace.ns.metadata.0.name
+  }
+  data = {
+    "kadi-initdb-config.sql" = <<-EOT
+        CREATE USER kadi WITH ENCRYPTED PASSWORD 'kadi' SUPERUSER;
+        CREATE DATABASE kadi;
+        \c kadi
       EOT
   }
 }

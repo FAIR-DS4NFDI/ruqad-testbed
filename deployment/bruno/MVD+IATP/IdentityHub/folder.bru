@@ -1,0 +1,9 @@
+meta {
+  name: IdentityHub
+}
+
+tests {
+  test("Status is OK or conflict", function() {
+    expect(res.getStatus()).to.be.oneOf([200, 204, 409])
+  })
+}

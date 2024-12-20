@@ -1,0 +1,32 @@
+meta {
+  name: Get Assets
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{HOST}}/api/management/v3/assets/request
+  body: text
+  auth: apikey
+}
+
+auth:apikey {
+  key: X-Api-Key
+  value: password
+  placement: header
+}
+
+body:text {
+  {
+      "@context": {
+          "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+      },
+      "@type": "QuerySpec"
+  }
+}
+
+tests {
+  test("Status code is >=200 and <300", function () {
+      expect(res.getStatus() < 300 && res.getStatus() >= 200).to.be.true
+  });
+}

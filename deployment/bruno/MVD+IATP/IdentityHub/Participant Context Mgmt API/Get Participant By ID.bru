@@ -1,0 +1,17 @@
+meta {
+  name: Get Participant By ID
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{CS_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: X-Api-Key
+  value: {{IH_API_TOKEN}}
+  placement: header
+}

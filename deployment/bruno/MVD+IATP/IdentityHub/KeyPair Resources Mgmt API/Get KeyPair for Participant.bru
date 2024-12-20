@@ -1,0 +1,17 @@
+meta {
+  name: Get KeyPair for Participant
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{CS_URL}}/api/identity/v1alpha/participants/BPN0000001/keypairs
+  body: none
+  auth: apikey
+}
+
+auth:apikey {
+  key: X-Api-Key
+  value: {{IH_API_TOKEN}}
+  placement: header
+}

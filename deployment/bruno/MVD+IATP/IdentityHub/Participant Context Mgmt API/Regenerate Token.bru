@@ -1,0 +1,17 @@
+meta {
+  name: Regenerate Token
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{CS_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/token
+  body: json
+  auth: apikey
+}
+
+auth:apikey {
+  key: X-Api-Key
+  value: {{IH_API_TOKEN}}
+  placement: header
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Publish DID
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{CS_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/dids/publish
+  body: json
+  auth: apikey
+}
+
+auth:apikey {
+  key: X-Api-Key
+  value: {{IH_API_TOKEN}}
+  placement: header
+}
+
+body:json {
+  {
+      "did": "did:web:BPN0000001"
+  }
+}

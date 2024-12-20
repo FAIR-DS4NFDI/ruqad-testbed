@@ -117,5 +117,5 @@ locals {
   mariadb-host = "${var.instance-name}-mariadb-service"
   mariadb-port = 3306
   app-name = "${var.instance-name}-linkahead"
-  linkahead-image = "indiscale/linkahead:dev"
+  linkahead-image = "indiscale/linkahead:0.16.0-rc-ruqad.1"
 }

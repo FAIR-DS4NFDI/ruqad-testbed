@@ -1,0 +1,39 @@
+meta {
+  name: Activate Participant
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{CS_URL}}/api/identity/v1alpha/participants/{{PARTICIPANT_ID}}/state?isActive=true
+  body: json
+  auth: apikey
+}
+
+params:query {
+  isActive: true
+}
+
+auth:apikey {
+  key: X-Api-Key
+  value: {{IH_API_TOKEN}}
+  placement: header
+}
+
+body:json {
+  {
+      "roles":[],
+      "serviceEndpoints":[],
+      "isActive": true,
+      "participantId": "foobar",
+      "did": "did:web:foobar",
+      "key":{
+          "keyId": "key1",
+          "privateKeyAlias": "foobar-alias",
+          "keyGeneratorParams":{
+              "algorithm": "EC",
+              "curve": "secp256r1"
+          }
+      }
+  }
+}
