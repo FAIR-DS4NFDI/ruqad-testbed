@@ -76,6 +76,7 @@ After the runtime images are built, we bring up and configure the Kubernetes clu
     ```
 5. Forward the local port 80 to the ingress controller:
     `sudo ssh -i $(minikube ssh-key) docker@$(minikube ip) -L 80:localhost:80`
+   (You probably need to do this in a separate terminal, therefore you must set the alias for `minikube` from step 0 again.)
 6. Load the images:
     `minikube image load controlplane:latest dataplane:latest identity-hub:latest catalog-server:latest sts:latest`
 
