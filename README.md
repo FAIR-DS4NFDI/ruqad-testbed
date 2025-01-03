@@ -88,6 +88,8 @@ terraform init
 terraform apply
 ```
 
+The deployment can take 10 minutes and more to complete.
+
 Once Terraform has completed the deployment, type `kubectl get pods` and verify the output:
 
 ```shell
