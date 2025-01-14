@@ -34,10 +34,9 @@ following tools are installed and readily available:
 - JDK 17+
 - Git
 - a POSIX compliant shell
-- Postman (to comfortably execute REST requests)
+- Postman, optional (to comfortably execute REST requests)
 - `openssl`, optional, but required to [regenerate keys](#91-regenerating-issuer-keys)
-- `newman` (to run Postman collections from the command line)
-- not needed, but recommended: Kubernetes monitoring tools like K9s
+- `newman`, optional (to run Postman collections from the command line)
 
 All commands are executed from the **repository's root folder** unless stated otherwise via `cd` commands.
 
@@ -61,9 +60,9 @@ PostgreSQL and Hashicorp Vault obviously require additional configuration, which
 
 ### 2.2 Create the K8S cluster
 
-After the runtime images are built, we bring up and configure the Kubernetes cluster using Minikube.
+Now, we configure and start the Kubernetes cluster using Minikube:
 
-0. `alias minikube='minikube -p mvd'`
+0. `alias minikube='minikube -p batcat'`
 1. `alias kubectl='minikube kubectl --'`
 2. `minikube start`
 3. `minikube addons enable ingress`
@@ -76,7 +75,7 @@ After the runtime images are built, we bring up and configure the Kubernetes clu
     ```
 5. Forward the local port 80 to the ingress controller:
     `sudo ssh -i $(minikube ssh-key) docker@$(minikube ip) -L 80:localhost:80`
-   (You probably need to do this in a separate terminal, therefore you must set the alias for `minikube` from step 0 again.)
+   (You probably need to do this in a separate terminal, therefore you must set the alias for `minikube` from step 0 again. Optionally, add options -fN to ssh in order to send execute the command in the background.)
 6. Load the images:
     `minikube image load controlplane:latest dataplane:latest identity-hub:latest catalog-server:latest sts:latest`
 
